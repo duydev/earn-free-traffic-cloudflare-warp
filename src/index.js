@@ -42,13 +42,11 @@ async function main() {
 
   while (true) {
     try {
-      await Promise.all(
-        Array(CONCURRENT)
-          .fill()
-          .map(() => earnFreeTraffic(clientId))
-      );
-
-      console.log(`${++count}. Earned +3GB traffic.`);
+      for (let i = 0; i < CONCURRENT; i++) {
+        await earnFreeTraffic(clientId);
+        console.log(`${++count}. Earned +1GB traffic.`);
+        await sleep(300);
+      }
     } catch (err) {
       console.error(err);
     }
