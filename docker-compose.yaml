@@ -1,0 +1,10 @@
+version: '3.6'
+
+services:
+  worker:
+    container_name: earn-free-traffic-worker
+    restart: always
+    build: .
+    image: earn-free-traffic-worker:1.0.0
+    env_file:
+      - .env

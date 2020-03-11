@@ -2,8 +2,9 @@ require('dotenv').config();
 const axios = require('axios');
 const { genString, sleep } = require('./utils');
 
-const CONCURRENT = 3;
-const DELAY = 60000;
+const CONCURRENT = process.env.CONCURRENT || 3;
+const DELAY_BETWEEN_REQUEST = process.env.DELAY_BETWEEN_REQUEST || 5000;
+const DELAY_AFTER_BATCH = process.env.DELAY_AFTER_BATCH || 60000;
 
 async function earnFreeTraffic(clientId) {
   const installId = genString(11);
@@ -30,12 +31,6 @@ async function earnFreeTraffic(clientId) {
   return response.data;
 }
 
-async function waiting() {
-  console.log(`Waiting 1 minute.`);
-
-  await sleep(DELAY);
-}
-
 async function main() {
   let count = 0;
   const clientId = process.env.CLIENT_ID;
@@ -47,13 +42,15 @@ async function main() {
       for (let i = 0; i < CONCURRENT; i++) {
         await earnFreeTraffic(clientId);
         console.log(`${++count}. Earned +1GB traffic.`);
-        await sleep(5000);
+        await sleep(DELAY_BETWEEN_REQUEST);
       }
     } catch (err) {
       console.error(err);
     }
 
-    await waiting();
+    console.log(`Waiting some minutes...`);
+
+    await sleep(DELAY_AFTER_BATCH);
   }
 }
 
