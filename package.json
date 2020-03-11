@@ -1,0 +1,24 @@
+{
+  "name": "earn-free-traffic-cloudflare-warp",
+  "version": "1.0.0",
+  "description": "earn-free-traffic-cloudflare-warp",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duydev/earn-free-traffic-cloudflare-warp.git"
+  },
+  "author": "Tran Nhat Duy <duytn.hcm@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/duydev/earn-free-traffic-cloudflare-warp/issues"
+  },
+  "homepage": "https://github.com/duydev/earn-free-traffic-cloudflare-warp#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "lodash": "^4.17.15",
+    "nodeenv": "^3.0.0"
+  }
+}
