@@ -3,7 +3,7 @@ const axios = require('axios');
 const { genString, sleep } = require('./utils');
 
 const CONCURRENT = process.env.CONCURRENT || 3;
-const DELAY_BETWEEN_REQUEST = process.env.DELAY_BETWEEN_REQUEST || 5000;
+const DELAY_BETWEEN_REQUEST = process.env.DELAY_BETWEEN_REQUEST || 7000;
 const DELAY_AFTER_BATCH = process.env.DELAY_AFTER_BATCH || 60000;
 
 async function earnFreeTraffic(clientId) {
