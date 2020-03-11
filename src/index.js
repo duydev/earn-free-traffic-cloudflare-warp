@@ -47,7 +47,7 @@ async function main() {
       for (let i = 0; i < CONCURRENT; i++) {
         await earnFreeTraffic(clientId);
         console.log(`${++count}. Earned +1GB traffic.`);
-        await sleep(2000);
+        await sleep(5000);
       }
     } catch (err) {
       console.error(err);
