@@ -40,6 +40,8 @@ async function main() {
   let count = 0;
   const clientId = process.env.CLIENT_ID;
 
+  if (!clientId) throw Error('Missing client ID.');
+
   while (true) {
     try {
       for (let i = 0; i < CONCURRENT; i++) {
