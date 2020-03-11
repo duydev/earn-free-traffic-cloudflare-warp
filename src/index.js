@@ -1,4 +1,9 @@
+require('dotenv').config();
+const axios = require('axios');
 const { genString, sleep } = require('./utils');
+
+const CONCURRENT = 3;
+const DELAY = 60000;
 
 async function earnFreeTraffic(clientId) {
   const installId = genString(11);
@@ -14,29 +19,42 @@ async function earnFreeTraffic(clientId) {
     locale: 'en_US'
   };
 
-  data = JSON.stringify(data);
-
-  await axios({
+  const options = {
     url: 'https://api.cloudflareclient.com/v0a745/reg',
     method: 'POST',
-    data,
-    headers: {
-      'Content-Type': 'application/json',
-      Host: 'api.cloudflareclient.com',
-      Connection: 'Keep-Alive',
-      'Accept-Encoding': 'gzip',
-      'User-Agent': 'okhttp/3.12.1',
-      'Content-Length': data.length
-    }
-  });
+    data
+  };
+
+  const response = await axios(options);
+
+  return response.data;
+}
+
+async function waiting() {
+  console.log(`Waiting 1 minute.`);
+
+  await sleep(DELAY);
 }
 
 async function main() {
+  let count = 0;
   const clientId = process.env.CLIENT_ID;
 
-  await earnFreeTraffic(clientId);
+  while (true) {
+    try {
+      await Promise.all(
+        Array(CONCURRENT)
+          .fill()
+          .map(() => earnFreeTraffic(clientId))
+      );
 
-  console.log(`Earned +1GB traffic.`);
+      console.log(`${++count}. Earned +3GB traffic.`);
+    } catch (err) {
+      console.error(err);
+    }
+
+    await waiting();
+  }
 }
 
 main().catch(err => {
